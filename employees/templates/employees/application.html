@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<title>Leave Management Sytem</title>
+
+<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="w3-top">
+ <div class="w3-bar w3-theme-d2 w3-left-align">
+  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  <a href="/employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
+  <a href="{% url 'employees:manage_requests' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Process Leave Requests</a>
+  <a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+ </div>
+</div>
+
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+    <!-- Left Column -->
+    <div class="w3-third" style="margin-top:3vw;">
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-container">
+          <div class="w3-container w3-text-black">
+            <h2>{{ leave_detail.employee.user.first_name }} {{ leave_detail.employee.user.last_name }}</h2>
+          </div>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ leave_detail.employee.department }}</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ leave_detail.employee.state }}, {{ leave_detail.employee.nationality }}</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ leave_detail.employee.user.email }}</p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ leave_detail.employee.mobile }}</p>
+          <hr>
+
+          <br>
+        </div>
+      </div><br>
+
+    </div>
+    <div class="w3-twothird" style="margin-top:3vw;">
+    
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Reason for Leave Request</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Leave Type: {{ leave_detail.get_leave_type_display }}</b></h5>
+          <h5 class="w3-opacity"><b>Leave Period: </b></h5><h6 class="w3-text-teal"><h5 class="w3-opacity"><i class="fa fa-calendar fa-fw w3-margin-right"></i>{{ leave_detail.start_date }} - <span>{{ leave_detail.end_date }}</span></h6>
+          <h5 class="w3-opacity"><b>Description</b></h5>
+          <p>{{ leave_detail.reason_for_leave }}</p>
+			<form method="post">
+			{% csrf_token %}
+			{% for field in form %}
+			<div class="grid text-blur">
+			  	{{ field.label_tag }}<br>
+			  </div>
+			  <div class="grid">
+			    {{ field }}
+			  </div>
+			{% if field.help_text %}
+			  <small style="color: grey">{{ field.help_text }}</small>
+			{% endif %}
+			{% for error in field.errors %}
+			  <p style="color: red">{{ error }}</p>
+			{% endfor %}
+			</p>
+			{% endfor %}
+			<button class="button" style="background-color:#FFD166; color:#000;" type="submit">Update Application</button>
+			</form>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

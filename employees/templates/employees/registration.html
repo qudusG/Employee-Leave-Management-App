@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<title>Leave Management Sytem</title>
+<head>
+  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'employees/login.css' %}">
+
+
+<div class="w3-top">
+ <div class="w3-bar w3-theme-d2 w3-left-align">
+  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  <a href="\employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
+  <a href="\employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
+ </div>
+</div>
+<div class="grid-container">
+	<div class="grid">
+		<h2>Employee Registration</h2>
+	</div>
+	<form method="post">
+	  {% csrf_token %}
+	  {% for field in form %}
+	      <div class="grid text-blur">
+		      	{{ field.label_tag }}<br>
+		      </div>
+		      <div class="grid">
+		        {{ field }}
+		      </div>
+	        {% if field.help_text %}
+	          <small style="color: grey">{{ field.help_text }}</small>
+	        {% endif %}
+	        {% for error in field.errors %}
+	          <p style="color: red">{{ error }}</p>
+	        {% endfor %}
+	      </p>
+	  {% endfor %}
+    
+	{% for field in profile_form %}
+	 	<div class="grid text-blur">{{ field.label_tag }}<br></div>
+	      <div class="grid">
+	        {{ field }}
+	      </div>
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+	{% endfor %}
+ 
+
+    <button class="button" style="background-color:#4CAF50; color:white;" type="submit">Sign up</button>
+	</form>
+	<div class="grid">
+		<br>
+		If you already have an account <a href="/employees"><strong>login</strong></a> instead.
+	</div>
+</div>

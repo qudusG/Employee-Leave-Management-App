@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<title>Leave Management Sytem</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body id="myPage">
+
+<div class="w3-top">
+ <div class="w3-bar w3-theme-d2 w3-left-align">
+  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+
+  <a href="/employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
+  {% if user.is_authenticated and not user.is_superuser %}
+  	<a href="{% url 'employees:profile' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Employee Profile</a>
+  	<a href="{% url 'employees:apply' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Leave Application</a>
+  	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+  {% elif user.is_authenticated and user.is_superuser %}
+  	<a href="{% url 'employees:manage_requests' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Process Leave Requests</a>
+  	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+  {% else %}
+  	<a href="/employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
+  {% endif %}
+  </div>
+
+ </div>
+
+  <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">
+  	<a href="/employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
+  	{% if user.is_authenticated and not user.is_superuser %}
+  		<a href="{% url 'employees:profile' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Employee Profile</a>
+  		<a href="{% url 'employees:apply' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Leave Application</a>
+  		<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+  	{% elif user.is_authenticated and user.is_superuser %}
+  		<a href="{% url 'employees:manage_requests' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Process Leave Requests</a>
+  		<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+  	{% else %}
+  		<a href="/employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
+  	{% endif %}
+  </div>
+</div>
+
+<div class="w3-container w3-padding-64 w3-center" id="team">
+{% if not user.is_authenticated %}
+	<h2>Welcome to the Leave Management System </h2>
+	<p>Please proceed to log in or register if you don't have an account:</p>
+{% elif user.is_authenticated and user.is_superuser %}
+	<h2>Leave Management System </h2>
+	<p>Hello Admin, {{ user.last_name }}. <br> Please find pending leave requests awaiting your approval.<br> Thank you. </p>
+{% elif user.is_authenticated and not user.is_superuser %}
+	<h2>Leave Management System </h2>
+	<p>Welcome, Mr. {{ user.last_name }}</p>
+	<p>Trust you are having a good day...</p>
+{% endif %}
+</div>
+
+<!-- Container -->
+<div class="w3-container" style="position:relative">
+  <a onclick="w3_open()" class="w3-button w3-xlarge w3-circle w3-teal"
+  style="position:absolute;top:-28px;right:24px">+</a>
+</div>
+
+
+
+{% if not user.is_authenticated %}
+	<div class="w3-row-padding w3-center w3-padding-64" id="pricing">
+	    <div class="w3-third w3-margin-bottom">
+	      <ul class="w3-ul w3-border w3-hover-shadow">
+	      <div class="grid-container">
+		      <div class="grid">
+		      	<h2>Login</h2>
+		      </div>
+			  <form method="post">
+				{% csrf_token %}
+				<div class="grid">
+			    	<label class="text-blur">Username:</label>
+			    </div>
+			    <div class="grid">
+			    	<input type="text" class="form-control" placeholder="Username" name="username" value>
+			    </div>
+
+			    <div class="grid">
+			    	<label class="text-blur">Password:</label>
+			    </div>
+			    <div class="grid">
+			    	<input type="password" class="form-control" placeholder="Password" name="password" value>
+			    </div>
+			    <div class="grid">		
+			    	<button style="background-color:#4CAF50; color:white; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); padding: 8px 24px; cursor: pointer;" class="button" type="submit">Login</button>
+			    </div>
+		  	  </form>
+			</div>
+	        <li class=" w3-padding-24">
+	          <a href="{% url 'employees:register' %}" class="w3-button w3-teal w3-padding-large" "fa fa-check">Register</a>
+	          
+	        </li>
+	      </ul>
+	    </div>
+	</div>
+{% endif %}
+
+
+<script>
+
+function w3_open() {
+  var x = document.getElementById("mySidebar");
+  x.style.width = "300px";
+  x.style.paddingTop = "10%";
+  x.style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>
