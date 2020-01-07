@@ -22,6 +22,12 @@
   <a href="\employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
  </div>
 </div>
+
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">  	
+  	<a href="\employees" class="w3-bar-item w3-button">Leave Management</a>
+  	<a href="\login" class="w3-bar-item w3-button">Login</a>
+</div>
+
 <div class="grid-container">
 	<div class="grid">
 		<h2>Employee Registration</h2>
@@ -66,3 +72,27 @@
 		If you already have an account <a href="/employees"><strong>login</strong></a> instead.
 	</div>
 </div>
+
+<script>
+
+function w3_open() {
+  var x = document.getElementById("mySidebar");
+  x.style.width = "300px";
+  x.style.paddingTop = "10%";
+  x.style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+</html>

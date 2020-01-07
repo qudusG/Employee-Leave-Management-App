@@ -60,32 +60,20 @@ def index(request):
 
 @login_required
 def apply(request):
-	#instanc = EmployeeProfile.objects.get(user=request.user)
-	#instance = LeaveRequest(employee=instanc)
-	#form = LeaveRequestForm(instance=instance)
-	#form = LeaveRequestForm(initial={'employee':request.user})
+	
 	if request.method == 'POST':
 		form = LeaveRequestForm(request.POST,hide_condition=True)
-		#form = LeaveRequestForm(initial={'employee':employee.user})
 		if form.is_valid():
-			#form = LeaveRequestForm(initial={'employee':employee.user.username})
-			#form.instance.employee = request.user
 			form.save()
 			return HttpResponseRedirect(reverse('employees:profile'))
 	else:
 		default = EmployeeProfile.objects.get(user=request.user)
 
 		form = LeaveRequestForm(initial={'employee':default},hide_condition=True)
-		#form = LeaveRequestForm(hide_condition=True)
 	context = {'form':form}
-    #self form.employee = request.User
 	return render(request, 'employees/apply.html',context)
 
 def register(request):
-	#model = Employee
-	#form_class = UserCreationForm
-	#success_url = reverse_lazy('index')
-	#template_name = 'employees/registration.html'
 	if request.method == 'POST':
 		form = ExtendedUserCreationForm(request.POST)
 		profile_form = EmployeeProfileForm(request.POST)
@@ -110,7 +98,6 @@ def register(request):
 @login_required
 def profile(request):
 	employee_detail = EmployeeProfile.objects.get(user=request.user.id)
-	#employee_detail = get_object_or_404(EmployeeProfile=request.user.id)
 	context = {'employee_detail':employee_detail}
 	global custom_user
 	custom_user = request.user.id
@@ -118,8 +105,6 @@ def profile(request):
 
 @staff_member_required
 def manage_requests(request):
-	#choic = ManageRequest.objects.filter(listed=True)
-	#context['status_decision'] = choic.get_status_decision_display()
 	leave_applications = LeaveRequest.objects.all()
 	context = {'leave_applications':leave_applications}
 	return render(request, 'employees/manage_requests.html', context)
@@ -129,18 +114,14 @@ def decision(request, leaverequest_id):
 	leave_detail = get_object_or_404(LeaveRequest, pk = leaverequest_id)
 	global custom2_user
 	custom2_user = leaverequest_id
-	#employee_detail = EmployeeProfile.objects.get(pk=employeeprofile_id)
-	#leave_request = LeaveRequest.objects.get(employee=employee_detail)
-	#manager_decision = ManageRequest.objects.get(manage_request=leave_detail)
 
 	if request.method == 'POST':
 		form = ManageRequestForm(request.POST)
 		if form.is_valid():
 			form.save()
 			return redirect('employees:update_application')
-			#return HttpResponseRedirect(reverse('employees:update_application',kwargs={'id':leave_detail.id}))
+			
 	else:
-		#form = ManageRequestForm()
 		default = LeaveRequest.objects.get(id=leaverequest_id)
 		form = ManageRequestForm(initial={'manage_request':default},hide_condition=True)
 	context = {'form':form,'leave_detail':leave_detail}
@@ -150,7 +131,6 @@ def decision(request, leaverequest_id):
 
 @staff_member_required
 def update_application(request):
-	#employee_detail = EmployeeProfile.objects.get(user=custom2_user)
 	leave_request = LeaveRequest.objects.get(id=custom2_user)
 	manager_decision = ManageRequest.objects.get(manage_request=leave_request)
 	context = {'leave_request':leave_request,'manager_decision':manager_decision}

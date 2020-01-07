@@ -26,12 +26,12 @@
  </div>
 </div>
 <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">
-  	<a href="/employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
   {% if user.is_authenticated %}
-  	<a href="{% url 'employees:profile' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Employee Profile</a>
-  	<a href="{% url 'employees:apply' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Leave Application</a>
-	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Sign Out</a>
+  	<a href="{% url 'employees:profile' %}" class="w3-bar-item w3-button">Employee Profile</a>
+  	<a href="{% url 'employees:apply' %}" class="w3-bar-item w3-button">Leave Application</a>
+	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button">Sign Out</a>
   {% else %}
+  	<a href="/employees" class="w3-bar-item w3-button"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
 	<a href="/employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
   {% endif %}
   </div>

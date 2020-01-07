@@ -20,7 +20,14 @@
  </div>
 </div>
 
-<div class="w3-container" style="margin-top:3vw;">
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">  	
+  	<a href="\employees" class="w3-bar-item w3-button">Leave Management</a>
+  	<a href="{% url 'employees:manage_requests' %}" class="w3-bar-item w3-button">Process Leave Requests</a>
+	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button">Sign Out</a>
+</div>
+
+
+<div class="w3-container" style="margin-top:5vw;">
 	{% if manager_decision.status_decision == 'Approved' %}
 		<p> Leave request for <strong>{{ leave_request.employee.user.first_name }} {{ leave_request.employee.user.last_name }}</strong> of the <strong>{{ leave_request.employee.department }}</strong> department has been approved.</p>
 	{% elif manager_decision.status_decision == 'Rejected' %}

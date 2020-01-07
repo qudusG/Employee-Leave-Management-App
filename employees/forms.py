@@ -2,8 +2,10 @@ from django import forms
 from .models import EmployeeProfile, Department, LeaveRequest, ManageRequest
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.admin import widgets
+from django.forms.widgets import SelectDateWidget
 
-years = [x for x in range(1940, 2021)]
+years = [x for x in range(1940, 2050)]
 
 class ExtendedUserCreationForm(UserCreationForm):
 	email = forms.EmailField(max_length=100)
@@ -31,27 +33,25 @@ class ExtendedUserCreationForm(UserCreationForm):
 		return user
 
 class EmployeeProfileForm(forms.ModelForm):
-	'''def __init__(self, *args, **kwargs):
-		super(EmployeeProfileForm, self).__init__(*args,**kwargs)
-
-		for fieldname in ['username', 'email', 'password1', 'password2']:
-			self.fields[fieldname].help_text = None'''
-
 	class Meta:
 		model = EmployeeProfile
 		fields = ('mobile','department','dob','address','city','state','origin_state','nationality')
+	def __init__(self, *args, **kwargs):
+		super(EmployeeProfileForm, self).__init__(*args, **kwargs)
+		self.fields['dob'].widget = SelectDateWidget(years=years)
 
 class LeaveRequestForm(forms.ModelForm):
 	class Meta:
 		model = LeaveRequest
-		#employee=forms.IntegerField(widget=forms.HiddenInput(),initial=EmployeeProfile.user)
-		#widgets = {'start_date': forms.DateTimeInput(attrs={'class': 'datetime-input'})}
 		fields = ('employee','leave_type','reason_for_leave','start_date', 'end_date')
 		
 	def __init__(self, *args, **kwargs):
-		from django.forms.widgets import HiddenInput
+		from django.forms.widgets import HiddenInput, SelectDateWidget
 		hide_condition = kwargs.pop('hide_condition',None)
 		super(LeaveRequestForm, self).__init__(*args, **kwargs)
+		self.fields['start_date'].widget = SelectDateWidget(years=years)
+		self.fields['end_date'].widget = SelectDateWidget(years=years)
+
 		if hide_condition:
 			self.fields['employee'].widget = HiddenInput()
 

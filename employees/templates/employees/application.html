@@ -20,6 +20,13 @@
  </div>
 </div>
 
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">  	
+  	<a href="/employees" class="w3-bar-item w3-button">Leave Management</a>
+  	<a href="{% url 'employees:manage_requests' %}" class="w3-bar-item w3-button">Process Leave Requests</a>
+	<a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button">Sign Out</a>
+</div>
+</div>
+
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
@@ -85,3 +92,25 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   </div>
 </div>
 
+<script>
+
+function w3_open() {
+  var x = document.getElementById("mySidebar");
+  x.style.width = "300px";
+  x.style.paddingTop = "10%";
+  x.style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
