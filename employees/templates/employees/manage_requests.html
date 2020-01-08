@@ -26,10 +26,10 @@
   <a href="{% url 'employees:logout' %}" class="w3-bar-item w3-button">Sign Out</a>
 </div>
 
-<div class="w3-top" style="margin-top:8%; margin-left:3vw">
+<div class="w3-container" style="margin-top:8%; margin-left:1vw">
 <h3>Leave Requests Available</h3>	
 {% for leave in leave_applications %}
-	<a href="{% url 'employees:decision' leave.id %}" class="w3-bar-item w3-button">{{ leave.employee.user.first_name }} {{ leave.employee.user.first_name }} - Department: {{ leave.employee.department }} </a>
+	<a href="{% url 'employees:decision' leave.id %}" class="w3-button" style="padding-left:1px;">{{ leave.employee.user.first_name }} {{ leave.employee.user.last_name }} - {{ leave.employee.department }} </a><br>
 {% endfor %}
 </div>
 

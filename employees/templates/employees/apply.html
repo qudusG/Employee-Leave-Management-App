@@ -26,8 +26,10 @@
 	<a href="/employees" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Login</a>
   {% endif %}
  </div>
+</div>
 
 <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">  	
+<a href="/employees" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Leave Management</a>
   {% if user.is_authenticated %}
   	<a href="{% url 'employees:profile' %}" class="w3-bar-item w3-button">Employee Profile</a>
   	<a href="{% url 'employees:apply' %}" class="w3-bar-item w3-button">Leave Application</a>
@@ -37,34 +39,31 @@
 	<a href="/employees" class="w3-bar-item w3-button">Login</a>
   {% endif %}
 </div>
-</div>
 
-<div class="container" style="margin-top:5.5vw; margin-left:1vw">
-	      	<div class="grid-container">
-				<div class="grid">
-					<h2>Leave Application</h2>
-				</div>
-				<form method="post">
-				  {% csrf_token %}
-				  {% for field in form %}
-				      <div class="grid text-blur">
-					      	{{ field.label_tag }}<br>
-					      </div>
-					      <div class="grid">
-					        {{ field }}
-					      </div>
-				        {% if field.help_text %}
-				          <small style="color: grey">{{ field.help_text }}</small>
-				        {% endif %}
-				        {% for error in field.errors %}
-				          <p style="color: red">{{ error }}</p>
-				        {% endfor %}
-				      </p>
-				  {% endfor %}
+<div class="w3-bar-block" style="margin-top:8%; margin-left:1vw">
+	      	
+	<h2>Leave Application</h2>
+	<form method="post">
+	  {% csrf_token %}
+	  {% for field in form %}
+	      <div class="grid text-blur">
+		      	{{ field.label_tag }}<br>
+		      </div>
+		      <div class="grid">
+		        {{ field }}
+		      </div>
+	        {% if field.help_text %}
+	          <small style="color: grey">{{ field.help_text }}</small>
+	        {% endif %}
+	        {% for error in field.errors %}
+	          <p style="color: red">{{ error }}</p>
+	        {% endfor %}
+	      </p>
+	  {% endfor %}
 
-			    <button class="button" style="background-color:#FFD166; color:#000;" type="submit">Submit Application</button>
-				</form>
-			</div>
+    <button class="button" style="background-color:#FFD166; color:#000;" type="submit">Submit Application</button>
+	</form>
+			
 </div>
 
 <script>
